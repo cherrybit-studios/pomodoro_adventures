@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:pomodoro_adventures/repositories/repositories.dart';
 
+class NoStaminaFailure implements Exception {}
+
 class GameRepository {
   GameRepository({
     required CycleRepository cycleRepository,
@@ -22,6 +24,11 @@ class GameRepository {
 
   PlayerState get current => _current;
 
+  void _newState(PlayerState state) {
+    _current = state;
+    _controller.add(state);
+  }
+
   Future<void> load() async {
     // TODO(erickzanardo): load from persistense.
 
@@ -31,5 +38,35 @@ class GameRepository {
       ),
       location: LocationId.fahsteadTown,
     );
+  }
+
+  Future<Cycle> startActivity(Activity activity) async {
+    if (current.attributes.stamina.$1 - activity.staminaCost >= 0) {
+      final minutes = switch (activity.type) {
+        CycleType.short => 5,
+        CycleType.medium => 15,
+        CycleType.long => 25,
+      };
+
+      final cycle = _cycleRepository.createCycle(minutes);
+
+      _newState(
+        activity.onStart(
+          current.copyWith(currentActivity: activity),
+        ),
+      );
+
+      unawaited(
+        cycle.events.firstWhere((event) => event is CycleCompletedEvent).then(
+          (_) {
+            _newState(activity.onCompleteCycle(current));
+          },
+        ),
+      );
+
+      return cycle..start();
+    } else {
+      throw NoStaminaFailure();
+    }
   }
 }

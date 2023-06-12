@@ -7,7 +7,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final persistenceRepository = PersistenceRepository();
-  final cycleRepository = CycleRepository();
+  final cycleRepository = CycleRepository(rate: .01);
   final gameRepository = GameRepository(
     cycleRepository: cycleRepository,
     persistenceRepository: persistenceRepository,

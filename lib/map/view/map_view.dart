@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nes_ui/nes_ui.dart';
 import 'package:pomodoro_adventures/repositories/game/game.dart';
 
@@ -9,14 +10,13 @@ class MapView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final playerState = context.read<GameRepository>().current;
     final gridColor =
         (Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black)
             .withOpacity(.2);
     return Scaffold(
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          final textTheme = Theme.of(context).textTheme;
-
           const totalSize = Size(
             _cellSize * 20,
             _cellSize * 20,
@@ -50,23 +50,9 @@ class MapView extends StatelessWidget {
                 Positioned(
                   left: center.dx + entry.value.x * _cellSize,
                   top: center.dy + entry.value.y * _cellSize,
-                  child: NesPressable(
-                    onPress: () {},
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 8,
-                          height: 8,
-                          color: textTheme.bodyMedium?.color ?? Colors.black,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          entry.value.name,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
+                  child: _MapMarker(
+                    entry: entry,
+                    playerState: playerState,
                   ),
                 ),
               Positioned(
@@ -85,6 +71,58 @@ class MapView extends StatelessWidget {
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class _MapMarker extends StatelessWidget {
+  const _MapMarker({
+    required this.entry,
+    required this.playerState,
+  });
+
+  final MapEntry<LocationId, Location> entry;
+  final PlayerState playerState;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    final isCurrentLocation = playerState.location == entry.key;
+    final gameRepository = context.read<GameRepository>();
+
+    return NesPressable(
+      onPress: () async {
+        final navigator = Navigator.of(context);
+        // TODO(erickzanardo): Add a confirmation dialog.
+        // Actually, not only confirmation but also a dialog to show the
+        // travel time, to check stamina, and etc.
+        // Doing this right now so I can test the repositories communication.
+        // This would live in a cubit too btw.
+        await gameRepository.startActivity(
+          Travel(
+            destination: entry.key,
+            travelCycles: 1,
+          ),
+        );
+
+        navigator.pop();
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 8,
+            height: 8,
+            color: textTheme.bodyMedium?.color ?? Colors.black,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            entry.value.name + (isCurrentLocation ? ' (You are here)' : ''),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

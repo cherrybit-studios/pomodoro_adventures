@@ -71,5 +71,5 @@ class PlayerState extends Equatable {
   }
 
   @override
-  List<Object> get props => [attributes, location];
+  List<Object?> get props => [attributes, location, currentActivity];
 }
