@@ -2,8 +2,8 @@ import 'package:pomodoro_adventures/repositories/repositories.dart';
 
 const map = <LocationId, Location>{
   LocationId.fahsteadTown: Location(
-    x: 0,
-    y: 0,
+    x: 10,
+    y: 10,
     name: 'Fahstead Town',
     points: [
       Shop(
@@ -13,8 +13,8 @@ const map = <LocationId, Location>{
     ],
   ),
   LocationId.fahsteadMines: Location(
-    x: 1,
-    y: 1,
+    x: 11,
+    y: 11,
     name: 'Fahstead Mines',
     points: [
       Mine(

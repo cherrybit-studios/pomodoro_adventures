@@ -9,31 +9,64 @@ class MapView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gridColor =
+        (Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black)
+            .withOpacity(.2);
     return Scaffold(
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          final center = constraints.biggest.center(Offset.zero);
           final textTheme = Theme.of(context).textTheme;
+
+          const totalSize = Size(
+            _cellSize * 20,
+            _cellSize * 20,
+          );
+
+          final center = Offset(
+            constraints.maxWidth / 2 - totalSize.width / 2,
+            constraints.maxHeight / 2 - totalSize.height / 2,
+          );
 
           return Stack(
             children: [
+              for (var y = 0; y < totalSize.height; y += _cellSize)
+                for (var x = 0; x < totalSize.width; x += _cellSize)
+                  Positioned(
+                    left: center.dx + x.toDouble(),
+                    top: center.dy + y.toDouble(),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: gridColor,
+                        ),
+                      ),
+                      child: SizedBox(
+                        width: _cellSize.toDouble(),
+                        height: _cellSize.toDouble(),
+                      ),
+                    ),
+                  ),
               for (final entry in map.entries)
                 Positioned(
                   left: center.dx + entry.value.x * _cellSize,
                   top: center.dy + entry.value.y * _cellSize,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 8,
-                        height: 8,
-                        color: textTheme.bodyMedium?.color ?? Colors.black,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        entry.value.name,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                  child: NesPressable(
+                    onPress: () {},
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 8,
+                          height: 8,
+                          color: textTheme.bodyMedium?.color ?? Colors.black,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          entry.value.name,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               Positioned(
