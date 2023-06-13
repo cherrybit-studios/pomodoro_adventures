@@ -5,6 +5,7 @@ const map = <LocationId, Location>{
     x: 10,
     y: 10,
     name: 'Fahstead Town',
+    background: 'assets/locations/fahstead.png',
     points: [
       Shop(
         name: 'Five leaves General Store',
@@ -19,6 +20,7 @@ const map = <LocationId, Location>{
   LocationId.fahsteadMines: Location(
     x: 11,
     y: 11,
+    background: 'assets/locations/fahstead_mines.png',
     name: 'Fahstead Mines',
     points: [
       Mine(

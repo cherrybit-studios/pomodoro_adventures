@@ -1,8 +1,18 @@
+import 'package:pomodoro_adventures/repositories/game/game.dart';
+
 enum LocationId {
   travelling,
   fahsteadTown,
   fahsteadMines,
-  fahsteadWoods,
+  fahsteadWoods;
+
+  String get name {
+    if (this == LocationId.travelling) {
+      return '-';
+    } else {
+      return map[this]!.name;
+    }
+  }
 }
 
 abstract class Point {
@@ -39,10 +49,12 @@ class Location {
     required this.x,
     required this.y,
     required this.points,
+    required this.background,
   });
 
   final String name;
   final int x;
   final int y;
   final List<Point> points;
+  final String background;
 }

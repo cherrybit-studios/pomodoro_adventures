@@ -32,3 +32,4 @@ flutter:
   assets:
     - assets/sprites/
     - assets/tilesets/
+    - assets/locations/
