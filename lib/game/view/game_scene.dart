@@ -9,30 +9,33 @@ class GameScene extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<GameCubit>();
+    return BlocBuilder<GameCubit, GameState>(
+      buildWhen: (previous, current) =>
+          previous.playerState.currentActivity !=
+          current.playerState.currentActivity,
+      builder: (context, state) {
+        final activity = state.playerState.currentActivity;
 
-    final state = cubit.state;
+        if (activity == null) {
+          return IdleScene(
+            playerState: state.playerState,
+          );
+        } else if (activity is ShortRest) {
+          return const Center(
+            child: Text('Short rest'),
+          );
+        } else if (activity is LongRest) {
+          return const Center(
+            child: Text('Long rest'),
+          );
+        } else if (activity is Travel) {
+          return TravelScene(
+            playerState: state.playerState,
+          );
+        }
 
-    final activity = state.playerState.currentActivity;
-
-    if (activity == null) {
-      return IdleScene(
-        playerState: state.playerState,
-      );
-    } else if (activity is ShortRest) {
-      return const Center(
-        child: Text('Short rest'),
-      );
-    } else if (activity is LongRest) {
-      return const Center(
-        child: Text('Long rest'),
-      );
-    } else if (activity is Travel) {
-      return TravelScene(
-        playerState: state.playerState,
-      );
-    }
-
-    return const SizedBox();
+        return const SizedBox();
+      },
+    );
   }
 }
