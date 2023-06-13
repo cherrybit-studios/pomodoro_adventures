@@ -16,6 +16,7 @@ dependencies:
     sdk: flutter
   intl: ^0.18.0
   nes_ui: ^0.6.0
+  phased: ^0.0.3
 
 dev_dependencies:
   bloc_test: ^9.1.2

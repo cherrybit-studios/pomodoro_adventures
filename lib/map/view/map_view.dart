@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nes_ui/nes_ui.dart';
+import 'package:pomodoro_adventures/map/map.dart';
 import 'package:pomodoro_adventures/repositories/game/game.dart';
+import 'package:pomodoro_adventures/widgets/widgets.dart';
 
 const _cellSize = 32;
 
@@ -14,6 +16,9 @@ class MapView extends StatelessWidget {
     final gridColor =
         (Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black)
             .withOpacity(.2);
+
+    final mapState = context.watch<MapCubit>().state;
+
     return Scaffold(
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -68,6 +73,15 @@ class MapView extends StatelessWidget {
                   },
                 ),
               ),
+              if (mapState.selected != null)
+                Positioned(
+                  top: 16,
+                  right: 16,
+                  child: LocationPanel(
+                    locationId: mapState.selected!,
+                    location: map[mapState.selected!]!,
+                  ),
+                ),
             ],
           );
         },
@@ -89,25 +103,18 @@ class _MapMarker extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
+    final mapCubit = context.watch<MapCubit>();
+
     final isCurrentLocation = playerState.location == entry.key;
-    final gameRepository = context.read<GameRepository>();
+    final isSelected = mapCubit.state.selected == entry.key;
 
-    return NesPressable(
+    final child = NesPressable(
       onPress: () async {
-        final navigator = Navigator.of(context);
-        // TODO(erickzanardo): Add a confirmation dialog.
-        // Actually, not only confirmation but also a dialog to show the
-        // travel time, to check stamina, and etc.
-        // Doing this right now so I can test the repositories communication.
-        // This would live in a cubit too btw.
-        await gameRepository.startActivity(
-          Travel(
-            destination: entry.key,
-            travelCycles: 1,
-          ),
-        );
-
-        navigator.pop();
+        if (isSelected) {
+          context.read<MapCubit>().select(null);
+        } else {
+          context.read<MapCubit>().select(entry.key);
+        }
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,5 +132,7 @@ class _MapMarker extends StatelessWidget {
         ],
       ),
     );
+
+    return isSelected ? Blink(child: child) : child;
   }
 }

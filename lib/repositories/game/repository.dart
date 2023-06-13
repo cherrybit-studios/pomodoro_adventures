@@ -52,7 +52,9 @@ class GameRepository {
 
       _newState(
         activity.onStart(
-          current.copyWith(currentActivity: activity),
+          current
+              .applyStamina(-activity.staminaCost)
+              .copyWith(currentActivity: activity),
         ),
       );
 

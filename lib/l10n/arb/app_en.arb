@@ -1,7 +1,7 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
+    "travelDistance": "Travel Distance",
+    "youAreHere": "You are currently in this location",
+    "points": "Points",
+    "travel": "Travel"
 }

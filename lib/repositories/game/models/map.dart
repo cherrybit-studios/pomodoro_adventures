@@ -10,6 +10,10 @@ const map = <LocationId, Location>{
         name: 'Five leaves General Store',
         // TODO(erickzanardo): items to seel
       ),
+      Shop(
+        name: "Boar's Head Inn",
+        // TODO(erickzanardo): items to seel
+      ),
     ],
   ),
   LocationId.fahsteadMines: Location(
