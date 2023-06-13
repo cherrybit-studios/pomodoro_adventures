@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomodoro_adventures/game/game.dart';
 import 'package:pomodoro_adventures/repositories/repositories.dart';
+import 'package:pomodoro_adventures/scenes/scenes.dart';
 
 class GameScene extends StatelessWidget {
   const GameScene({super.key});
@@ -15,8 +16,8 @@ class GameScene extends StatelessWidget {
     final activity = state.playerState.currentActivity;
 
     if (activity == null) {
-      return const Center(
-        child: Text('Idle'),
+      return IdleScene(
+        playerState: state.playerState,
       );
     } else if (activity is ShortRest) {
       return const Center(
@@ -27,8 +28,8 @@ class GameScene extends StatelessWidget {
         child: Text('Long rest'),
       );
     } else if (activity is Travel) {
-      return const Center(
-        child: Text('Travel'),
+      return TravelScene(
+        playerState: state.playerState,
       );
     }
 

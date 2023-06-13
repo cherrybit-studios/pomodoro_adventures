@@ -6,10 +6,17 @@ class GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const scenePadding = 32.0;
     return const Scaffold(
       body: Stack(
         children: [
-          Positioned.fill(child: GameScene()),
+          Positioned(
+            top: scenePadding * 4,
+            left: scenePadding,
+            right: scenePadding,
+            bottom: scenePadding,
+            child: GameScene(),
+          ),
           Positioned(
             top: 16,
             left: 16,
