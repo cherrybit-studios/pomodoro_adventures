@@ -20,7 +20,7 @@ class MapCubit extends Cubit<MapState> {
 
   int calculateTravelDistance() {
     final selected = state.selected;
-    if (selected == null || selected == LocationId.travelling) {
+    if (selected == null || currentPlayerLocation() == LocationId.travelling) {
       return 0;
     }
 

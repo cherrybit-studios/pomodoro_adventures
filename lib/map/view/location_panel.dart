@@ -63,7 +63,8 @@ class LocationPanel extends StatelessWidget {
               ),
             ),
           const SizedBox(height: 16),
-          if (!isCurrentLocation)
+          if (!isCurrentLocation &&
+              cubit.currentPlayerLocation() != LocationId.travelling)
             NesButton(
               type: NesButtonType.primary,
               onPressed: () async {
