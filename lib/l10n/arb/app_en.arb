@@ -3,5 +3,7 @@
     "travelDistance": "Travel Distance",
     "youAreHere": "You are currently in this location",
     "points": "Points",
-    "travel": "Travel"
+    "travel": "Travel",
+    "places": "Places",
+    "back": "Back"
 }

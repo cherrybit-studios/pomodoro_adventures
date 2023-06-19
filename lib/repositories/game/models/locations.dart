@@ -21,10 +21,16 @@ abstract class Point {
   });
 
   final String name;
+
+  String get summary;
 }
 
 class Shop extends Point {
   const Shop({required super.name});
+
+  // TODO(erickzanardo): Implement shop description.
+  @override
+  String get summary => 'Shop';
 }
 
 enum OreType {
@@ -41,6 +47,9 @@ class Mine extends Point {
   });
 
   final List<OreType> ores;
+
+  @override
+  String get summary => 'Veins:\n${ores.map((e) => ' - ${e.name}').join('\n')}';
 }
 
 class Location {

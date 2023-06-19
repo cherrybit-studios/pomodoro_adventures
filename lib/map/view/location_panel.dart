@@ -57,9 +57,20 @@ class LocationPanel extends StatelessWidget {
           for (final point in location.points)
             Padding(
               padding: const EdgeInsets.only(top: 4),
-              child: Text(
-                point.name,
-                style: Theme.of(context).textTheme.bodySmall,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    point.name,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  NesTooltip(
+                    message: point.summary,
+                    child: NesIcon(
+                      iconData: NesIcons.instance.exclamationMarkBlock,
+                    ),
+                  ),
+                ],
               ),
             ),
           const SizedBox(height: 16),
