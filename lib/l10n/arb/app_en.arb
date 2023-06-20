@@ -8,5 +8,9 @@
     "back": "Back",
     "gear": "Gear",
     "preview": "Preview",
-    "equipped": "Equipped"
+    "equipped": "Equipped",
+    "headGear": "Head gear",
+    "armor": "Armor",
+    "leftHandGear": "Left hand gear",
+    "rightHandGear": "Right hand gear"
 }

@@ -43,17 +43,70 @@ class GearView extends StatelessWidget {
             children: [
               Expanded(
                 child: NesContainer(
-                  child: Transform.scale(
-                    scale: 4,
-                    child: PlayerSprite(
-                      playerState: playerState,
-                    ),
+                  height: 200,
+                  child: PlayerSprite(
+                    playerState: playerState,
                   ),
                 ),
               ),
               const SizedBox(width: 16),
-              const Expanded(
-                child: NesContainer(),
+              Expanded(
+                child: NesContainer(
+                  height: 200,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          NesTooltip(
+                            message: l10n.leftHandGear,
+                            child: NesIcon(
+                              iconData: NesIcons.instance.leftHand,
+                            ),
+                          ),
+                          Text(playerState.leftHand?.name ?? '-'),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          NesTooltip(
+                            message: l10n.rightHandGear,
+                            child: NesIcon(
+                              iconData: NesIcons.instance.rightHand,
+                            ),
+                          ),
+                          Text(playerState.rightHand?.name ?? '-'),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          NesTooltip(
+                            message: l10n.headGear,
+                            child: NesIcon(
+                              iconData: NesIcons.instance.helm,
+                            ),
+                          ),
+                          Text(playerState.head?.name ?? '-'),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          NesTooltip(
+                            message: l10n.armor,
+                            child: NesIcon(
+                              iconData: NesIcons.instance.upperArmor,
+                            ),
+                          ),
+                          Text(playerState.body?.name ?? '-'),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
