@@ -5,5 +5,8 @@
     "points": "Points",
     "travel": "Travel",
     "places": "Places",
-    "back": "Back"
+    "back": "Back",
+    "gear": "Gear",
+    "preview": "Preview",
+    "equipped": "Equipped"
 }
