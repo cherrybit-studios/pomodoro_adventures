@@ -74,8 +74,9 @@ class Travel extends Activity {
   @override
   PlayerState onCompleteCycle(PlayerState playerState) {
     if (travelCycles == 1) {
-      return playerState.idle(
+      return playerState.copyWith(
         location: destination,
+        currentActivity: const NullableValue(null),
       );
     } else {
       return playerState.copyWith(

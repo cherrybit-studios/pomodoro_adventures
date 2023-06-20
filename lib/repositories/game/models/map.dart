@@ -9,11 +9,17 @@ const map = <LocationId, Location>{
     points: [
       Shop(
         name: 'Five leaves General Store',
-        // TODO(erickzanardo): items to seel
+        gearCatalogs: [],
       ),
       Shop(
         name: "Boar's Head Inn",
-        // TODO(erickzanardo): items to seel
+        gearCatalogs: [],
+      ),
+      Shop(
+        name: 'Iron Hammer Smithy',
+        gearCatalogs: [
+          basicPickaxes,
+        ],
       ),
     ],
   ),
@@ -24,7 +30,7 @@ const map = <LocationId, Location>{
     name: 'Fahstead Mines',
     points: [
       Mine(
-        name: 'Ground Level',
+        name: 'Ground Level veins',
         ores: [
           OreType.cooper,
           OreType.tin,

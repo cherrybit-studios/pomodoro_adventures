@@ -11,6 +11,11 @@ void main() {
           stamina: (2, 10),
         ),
         location: LocationId.fahsteadTown,
+        currentActivity: null,
+        leftHand: null,
+        rightHand: null,
+        head: null,
+        body: null,
       );
 
       final newState = playerState.applyStamina(-10);
@@ -23,6 +28,11 @@ void main() {
           stamina: (2, 10),
         ),
         location: LocationId.fahsteadTown,
+        currentActivity: null,
+        leftHand: null,
+        rightHand: null,
+        head: null,
+        body: null,
       );
 
       final newState = playerState.applyStamina(10);

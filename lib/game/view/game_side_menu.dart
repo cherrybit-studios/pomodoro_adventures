@@ -5,6 +5,7 @@ import 'package:pomodoro_adventures/game/game.dart';
 import 'package:pomodoro_adventures/l10n/l10n.dart';
 import 'package:pomodoro_adventures/map/map.dart';
 import 'package:pomodoro_adventures/repositories/game/models/map.dart';
+import 'package:pomodoro_adventures/repositories/repositories.dart';
 import 'package:pomodoro_adventures/widgets/widgets.dart';
 
 enum GameSideMenuState {
@@ -48,16 +49,21 @@ class _HomeMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLocationId =
+        context.select((GameCubit cubit) => cubit.state.playerState.location);
+
     final l10n = context.l10n;
     return NesContainer(
       child: Column(
         children: [
-          NesButton(
-            type: NesButtonType.normal,
-            onPressed: onPlacesPressed,
-            child: Text(l10n.places),
-          ),
-          const SizedBox(height: 9),
+          if (currentLocationId != LocationId.travelling) ...[
+            NesButton(
+              type: NesButtonType.normal,
+              onPressed: onPlacesPressed,
+              child: Text(l10n.places),
+            ),
+            const SizedBox(height: 8),
+          ],
           NesButton(
             type: NesButtonType.normal,
             onPressed: () {

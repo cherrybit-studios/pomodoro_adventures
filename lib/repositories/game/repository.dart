@@ -37,6 +37,11 @@ class GameRepository {
         stamina: (10, 10),
       ),
       location: LocationId.fahsteadTown,
+      currentActivity: null,
+      leftHand: null,
+      rightHand: null,
+      head: null,
+      body: null,
     );
   }
 
@@ -54,7 +59,7 @@ class GameRepository {
         activity.onStart(
           current
               .applyStamina(-activity.staminaCost)
-              .copyWith(currentActivity: activity),
+              .copyWith(currentActivity: NullableValue(activity)),
         ),
       );
 

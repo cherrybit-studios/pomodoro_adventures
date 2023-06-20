@@ -26,11 +26,16 @@ abstract class Point {
 }
 
 class Shop extends Point {
-  const Shop({required super.name});
+  const Shop({
+    required super.name,
+    required this.gearCatalogs,
+  });
 
-  // TODO(erickzanardo): Implement shop description.
+  final List<GearCatalog<dynamic>> gearCatalogs;
+
   @override
-  String get summary => 'Shop';
+  String get summary =>
+      'Sells:\n${gearCatalogs.map((e) => ' - ${e.name}').join('\n')}';
 }
 
 enum OreType {

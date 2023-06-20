@@ -65,6 +65,7 @@ class LocationPanel extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   NesTooltip(
+                    arrowPlacement: NesTooltipArrowPlacement.right,
                     message: point.summary,
                     child: NesIcon(
                       iconData: NesIcons.instance.exclamationMarkBlock,
