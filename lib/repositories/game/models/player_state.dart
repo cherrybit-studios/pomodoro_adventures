@@ -11,15 +11,19 @@ class NullableValue<T> {
 class PlayerAttributes extends Equatable {
   const PlayerAttributes({
     required this.stamina,
+    required this.health,
   });
 
   final (int, int) stamina;
+  final (int, int) health;
 
   PlayerAttributes copyWith({
     (int, int)? stamina,
+    (int, int)? health,
   }) {
     return PlayerAttributes(
       stamina: stamina ?? this.stamina,
+      health: health ?? this.health,
     );
   }
 
@@ -31,6 +35,7 @@ class PlayerState extends Equatable {
   const PlayerState({
     required this.attributes,
     required this.location,
+    required this.inventory,
     required this.currentActivity,
     required this.leftHand,
     required this.rightHand,
@@ -40,6 +45,7 @@ class PlayerState extends Equatable {
 
   final PlayerAttributes attributes;
   final LocationId location;
+  final List<Item> inventory;
   final Activity? currentActivity;
   final HandGear? leftHand;
   final HandGear? rightHand;
@@ -62,9 +68,26 @@ class PlayerState extends Equatable {
     );
   }
 
+  PlayerState applyHealth(int health) {
+    final newHealth = math.max(
+      0,
+      math.min(
+        attributes.health.$1 + health,
+        attributes.health.$2,
+      ),
+    );
+
+    return copyWith(
+      attributes: attributes.copyWith(
+        health: (newHealth, attributes.health.$2),
+      ),
+    );
+  }
+
   PlayerState copyWith({
     PlayerAttributes? attributes,
     LocationId? location,
+    List<Item>? inventory,
     NullableValue<Activity>? currentActivity,
     NullableValue<HandGear>? leftHand,
     NullableValue<HandGear>? rightHand,
@@ -74,6 +97,7 @@ class PlayerState extends Equatable {
     return PlayerState(
       attributes: attributes ?? this.attributes,
       location: location ?? this.location,
+      inventory: inventory ?? this.inventory,
       currentActivity: currentActivity == null
           ? this.currentActivity
           : currentActivity.value,
@@ -88,6 +112,7 @@ class PlayerState extends Equatable {
   List<Object?> get props => [
         attributes,
         location,
+        inventory,
         currentActivity,
         leftHand,
         rightHand,

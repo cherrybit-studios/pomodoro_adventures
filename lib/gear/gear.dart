@@ -1,1 +1,1 @@
-export 'view/gear_view.dart';
+export 'view/view.dart';

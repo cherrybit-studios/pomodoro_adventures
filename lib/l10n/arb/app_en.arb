@@ -12,5 +12,9 @@
     "headGear": "Head gear",
     "armor": "Armor",
     "leftHandGear": "Left hand gear",
-    "rightHandGear": "Right hand gear"
+    "rightHandGear": "Right hand gear",
+    "availableGears": "Available gears",
+    "currentEquippedGear": "Equipped gear",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
 }

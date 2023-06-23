@@ -1,23 +1,24 @@
-import 'package:equatable/equatable.dart';
 import 'package:pomodoro_adventures/repositories/repositories.dart';
 
 enum GearId {
+  // Pickaxes
   bronzePickaxe,
+  // Shields
+  woodRoundShield,
 }
 
-abstract class Gear extends Equatable {
+abstract class Gear extends Item {
   const Gear({
-    required this.name,
-    required this.description,
-    required this.icon,
+    required super.name,
+    required super.description,
+    required super.icon,
+    required this.sprite,
   });
 
-  final String name;
-  final String description;
-  final String icon;
+  final String sprite;
 
   @override
-  List<Object?> get props => [name, description, icon];
+  List<Object?> get props => super.props + [sprite];
 }
 
 abstract class Armor extends Gear {
@@ -26,6 +27,7 @@ abstract class Armor extends Gear {
     required super.description,
     required super.icon,
     required this.defense,
+    required super.sprite,
   });
 
   final int defense;
@@ -40,6 +42,7 @@ class HeadArmor extends Armor {
     required super.description,
     required super.icon,
     required super.defense,
+    required super.sprite,
   });
 
   @override
@@ -52,6 +55,7 @@ class BodyArmor extends Armor {
     required super.description,
     required super.icon,
     required super.defense,
+    required super.sprite,
   });
 
   @override
@@ -63,6 +67,7 @@ abstract class HandGear extends Gear {
     required super.name,
     required super.description,
     required super.icon,
+    required super.sprite,
   });
 }
 
@@ -71,6 +76,7 @@ abstract class Weapon extends HandGear {
     required super.name,
     required super.description,
     required super.icon,
+    required super.sprite,
     required this.attack,
   });
 
@@ -80,11 +86,12 @@ abstract class Weapon extends HandGear {
   List<Object?> get props => super.props + [attack];
 }
 
-abstract class Shield extends HandGear {
+class Shield extends HandGear {
   const Shield({
     required super.name,
     required super.description,
     required super.icon,
+    required super.sprite,
     required this.defense,
   });
 
@@ -100,6 +107,7 @@ class Pickaxe extends Weapon {
     required super.description,
     required super.icon,
     required super.attack,
+    required super.sprite,
     required this.oresSupported,
   });
 

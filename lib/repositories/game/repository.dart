@@ -31,12 +31,13 @@ class GameRepository {
 
   Future<void> load() async {
     // TODO(erickzanardo): load from persistense.
-
-    _current = const PlayerState(
-      attributes: PlayerAttributes(
+    _current = PlayerState(
+      attributes: const PlayerAttributes(
         stamina: (10, 10),
+        health: (10, 10),
       ),
       location: LocationId.fahsteadTown,
+      inventory: [allPickaxes.gears.first, allShields.gears.first],
       currentActivity: null,
       leftHand: null,
       rightHand: null,

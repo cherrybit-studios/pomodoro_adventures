@@ -9,8 +9,10 @@ void main() {
       final playerState = PlayerState(
         attributes: PlayerAttributes(
           stamina: (2, 10),
+          health: (10, 10),
         ),
         location: LocationId.fahsteadTown,
+        inventory: const [],
         currentActivity: null,
         leftHand: null,
         rightHand: null,
@@ -26,8 +28,10 @@ void main() {
       final playerState = PlayerState(
         attributes: PlayerAttributes(
           stamina: (2, 10),
+          health: (10, 10),
         ),
         location: LocationId.fahsteadTown,
+        inventory: const [],
         currentActivity: null,
         leftHand: null,
         rightHand: null,
