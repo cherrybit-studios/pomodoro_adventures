@@ -4,17 +4,20 @@ import 'package:mini_sprite/mini_sprite.dart';
 import 'package:nes_ui/nes_ui.dart';
 import 'package:pomodoro_adventures/l10n/l10n.dart';
 import 'package:pomodoro_adventures/repositories/repositories.dart';
+import 'package:pomodoro_adventures/widgets/widgets.dart';
 
 class GearChangeView extends StatefulWidget {
   const GearChangeView({
     required this.onSelected,
     required this.onCancel,
     required this.gearType,
+    required this.fullSelection,
     this.selected,
     super.key,
   });
 
   final Gear? selected;
+  final List<Gear> fullSelection;
   final void Function(Gear? selected) onSelected;
   final VoidCallback onCancel;
   final Type gearType;
@@ -25,7 +28,7 @@ class GearChangeView extends StatefulWidget {
 
 class _GearChangeViewState extends State<GearChangeView> {
   late final Gear? _currentSelected = widget.selected;
-  Gear? _selected;
+  late Gear? _selected = widget.selected;
   late List<Gear> _gears;
 
   @override
@@ -46,7 +49,9 @@ class _GearChangeViewState extends State<GearChangeView> {
           return false;
         })
         .cast<Gear>()
-        .where((gear) => gear != _selected)
+        .where(
+          (gear) => gear != _selected && !widget.fullSelection.contains(gear),
+        )
         .toList();
   }
 
@@ -69,28 +74,24 @@ class _GearChangeViewState extends State<GearChangeView> {
                 : const Text(' - '),
           ),
           const SizedBox(height: 8),
-          NesIcon(
-            iconData: NesIcons.instance.exchange,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              NesIcon(
+                iconData: NesIcons.instance.exchange,
+              ),
+              const SizedBox(width: 8),
+              _GearChange(
+                previousGear: _currentSelected,
+                newGear: _selected,
+              ),
+            ],
           ),
           const SizedBox(height: 8),
           SizedBox(
             height: 32,
             child: _selected != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _GearLabel(gear: _selected!),
-                      const SizedBox(width: 4),
-                      NesIconButton(
-                        icon: NesIcons.instance.close,
-                        onPress: () {
-                          setState(() {
-                            _selected = null;
-                          });
-                        },
-                      ),
-                    ],
-                  )
+                ? _GearLabel(gear: _selected!)
                 : const Text(' - '),
           ),
           const SizedBox(height: 16),
@@ -103,6 +104,20 @@ class _GearChangeViewState extends State<GearChangeView> {
             child: NesSingleChildScrollView(
               child: Column(
                 children: [
+                  NesPressable(
+                    onPress: () {
+                      setState(() {
+                        _selected = null;
+                      });
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(l10n.nohting),
+                        const SizedBox(height: 8),
+                      ],
+                    ),
+                  ),
                   for (final gear in _gears)
                     NesPressable(
                       onPress: () {
@@ -127,17 +142,17 @@ class _GearChangeViewState extends State<GearChangeView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               NesButton(
-                type: NesButtonType.warning,
-                onPressed: widget.onCancel,
-                child: Text(l10n.cancel),
-              ),
-              const SizedBox(width: 8),
-              NesButton(
                 type: NesButtonType.primary,
                 onPressed: () {
                   widget.onSelected(_selected);
                 },
                 child: Text(l10n.confirm),
+              ),
+              const SizedBox(width: 8),
+              NesButton(
+                type: NesButtonType.warning,
+                onPressed: widget.onCancel,
+                child: Text(l10n.cancel),
               ),
             ],
           ),
@@ -166,6 +181,65 @@ class _GearLabel extends StatelessWidget {
         ),
         const SizedBox(width: 16),
         Text(gear.name),
+      ],
+    );
+  }
+}
+
+class _GearChange extends StatelessWidget {
+  const _GearChange({
+    required this.previousGear,
+    required this.newGear,
+  });
+
+  final Gear? previousGear;
+  final Gear? newGear;
+
+  @override
+  Widget build(BuildContext context) {
+    var defenseChange = 0;
+    var attackChange = 0;
+
+    if (previousGear != null &&
+        (previousGear is Shield || previousGear is Armor)) {
+      defenseChange -= previousGear!.value;
+    } else if (previousGear != null && previousGear is Weapon) {
+      attackChange -= previousGear!.value;
+    }
+
+    if (newGear != null && (newGear is Shield || newGear is Armor)) {
+      defenseChange += newGear!.value;
+    } else if (newGear != null && newGear is Weapon) {
+      attackChange += newGear!.value;
+    }
+
+    final attackColor = attackChange == 0
+        ? Theme.of(context).textTheme.bodySmall?.color
+        : attackChange < 0
+            ? decreaseColor
+            : increaseColor;
+
+    final defenseColor = defenseChange == 0
+        ? Theme.of(context).textTheme.bodySmall?.color
+        : defenseChange < 0
+            ? decreaseColor
+            : increaseColor;
+
+    return Row(
+      children: [
+        Text(
+          'A:${attackChange < 0 ? '-' : '+'}$attackChange',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: attackColor,
+              ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          'D:${defenseChange < 0 ? '-' : '+'}$defenseChange',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: defenseColor,
+              ),
+        ),
       ],
     );
   }

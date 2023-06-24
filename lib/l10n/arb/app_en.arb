@@ -16,5 +16,6 @@
     "availableGears": "Available gears",
     "currentEquippedGear": "Equipped gear",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "nohting": "Nothing"
 }

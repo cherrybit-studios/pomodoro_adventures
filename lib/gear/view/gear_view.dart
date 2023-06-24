@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mini_sprite/mini_sprite.dart';
 import 'package:nes_ui/nes_ui.dart';
 import 'package:pomodoro_adventures/game/game.dart';
 import 'package:pomodoro_adventures/gear/view/view.dart';
@@ -21,6 +22,7 @@ class GearView extends StatefulWidget {
 
 class _GearViewState extends State<GearView> {
   Type? _selectedGearType;
+  late GearSlot _gearSlot;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +57,7 @@ class _GearViewState extends State<GearView> {
                 Row(
                   children: [
                     Expanded(
+                      flex: 4,
                       child: NesContainer(
                         height: 200,
                         child: PlayerSprite(
@@ -64,20 +67,21 @@ class _GearViewState extends State<GearView> {
                     ),
                     const SizedBox(width: 16),
                     Expanded(
+                      flex: 6,
                       child: NesContainer(
                         height: 200,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             NesPressable(
                               onPress: () {
                                 setState(() {
                                   _selectedGearType = HandGear;
+                                  _gearSlot = GearSlot.leftHand;
                                 });
                               },
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   NesTooltip(
                                     message: l10n.leftHandGear,
@@ -85,7 +89,8 @@ class _GearViewState extends State<GearView> {
                                       iconData: NesIcons.instance.leftHand,
                                     ),
                                   ),
-                                  Text(playerState.leftHand?.name ?? '-'),
+                                  const SizedBox(width: 8),
+                                  _GearEntry(gear: playerState.leftHand),
                                 ],
                               ),
                             ),
@@ -93,11 +98,10 @@ class _GearViewState extends State<GearView> {
                               onPress: () {
                                 setState(() {
                                   _selectedGearType = HandGear;
+                                  _gearSlot = GearSlot.rightHand;
                                 });
                               },
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   NesTooltip(
                                     message: l10n.rightHandGear,
@@ -105,33 +109,50 @@ class _GearViewState extends State<GearView> {
                                       iconData: NesIcons.instance.rightHand,
                                     ),
                                   ),
-                                  Text(playerState.rightHand?.name ?? '-'),
+                                  const SizedBox(width: 8),
+                                  _GearEntry(gear: playerState.rightHand),
                                 ],
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                NesTooltip(
-                                  message: l10n.headGear,
-                                  child: NesIcon(
-                                    iconData: NesIcons.instance.helm,
+                            NesPressable(
+                              onPress: () {
+                                setState(() {
+                                  _selectedGearType = HeadArmor;
+                                  _gearSlot = GearSlot.head;
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  NesTooltip(
+                                    message: l10n.headGear,
+                                    child: NesIcon(
+                                      iconData: NesIcons.instance.helm,
+                                    ),
                                   ),
-                                ),
-                                Text(playerState.head?.name ?? '-'),
-                              ],
+                                  const SizedBox(width: 8),
+                                  _GearEntry(gear: playerState.head),
+                                ],
+                              ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                NesTooltip(
-                                  message: l10n.armor,
-                                  child: NesIcon(
-                                    iconData: NesIcons.instance.upperArmor,
+                            NesPressable(
+                              onPress: () {
+                                setState(() {
+                                  _selectedGearType = BodyArmor;
+                                  _gearSlot = GearSlot.body;
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  NesTooltip(
+                                    message: l10n.armor,
+                                    child: NesIcon(
+                                      iconData: NesIcons.instance.upperArmor,
+                                    ),
                                   ),
-                                ),
-                                Text(playerState.body?.name ?? '-'),
-                              ],
+                                  const SizedBox(width: 8),
+                                  _GearEntry(gear: playerState.body),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -155,7 +176,9 @@ class _GearViewState extends State<GearView> {
               bottom: 0,
               top: 0,
               child: GearChangeView(
+                selected: playerState.gearFromSlot(_gearSlot),
                 gearType: _selectedGearType!,
+                fullSelection: playerState.equippedGear,
                 onCancel: () {
                   setState(() {
                     _selectedGearType = null;
@@ -164,13 +187,56 @@ class _GearViewState extends State<GearView> {
                 onSelected: (gear) {
                   setState(() {
                     _selectedGearType = null;
-                    // TODO change user
                   });
+                  context.read<GameRepository>().equipGear(
+                        gear: gear,
+                        slot: _gearSlot,
+                      );
                 },
               ),
             ),
         ],
       ),
     );
+  }
+}
+
+class _GearEntry extends StatelessWidget {
+  const _GearEntry({
+    required this.gear,
+  });
+
+  final Gear? gear;
+
+  @override
+  Widget build(BuildContext context) {
+    if (gear == null) {
+      return const Text('-');
+    } else {
+      return SizedBox(
+        width: 136,
+        height: 34,
+        child: Row(
+          children: [
+            NesIcon(
+              iconData: NesIconData(
+                MiniSprite.fromDataString(gear!.icon),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: NesTooltip(
+                message: gear!.name,
+                child: Text(
+                  gear!.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }

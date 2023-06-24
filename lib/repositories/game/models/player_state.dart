@@ -2,6 +2,13 @@ import 'dart:math' as math;
 import 'package:equatable/equatable.dart';
 import 'package:pomodoro_adventures/repositories/game/game.dart';
 
+enum GearSlot {
+  head,
+  body,
+  leftHand,
+  rightHand,
+}
+
 class NullableValue<T> {
   const NullableValue(this.value);
 
@@ -83,6 +90,26 @@ class PlayerState extends Equatable {
       ),
     );
   }
+
+  Gear? gearFromSlot(GearSlot slot) {
+    switch (slot) {
+      case GearSlot.head:
+        return head;
+      case GearSlot.body:
+        return body;
+      case GearSlot.leftHand:
+        return leftHand;
+      case GearSlot.rightHand:
+        return rightHand;
+    }
+  }
+
+  List<Gear> get equippedGear => [
+        if (head != null) head!,
+        if (body != null) body!,
+        if (leftHand != null) leftHand!,
+        if (rightHand != null) rightHand!,
+      ];
 
   PlayerState copyWith({
     PlayerAttributes? attributes,

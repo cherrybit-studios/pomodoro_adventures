@@ -46,6 +46,21 @@ class GameRepository {
     );
   }
 
+  void equipGear({required GearSlot slot, Gear? gear}) {
+    final state = switch (slot) {
+      GearSlot.head =>
+        current.copyWith(head: NullableValue(gear as HeadArmor?)),
+      GearSlot.body =>
+        current.copyWith(body: NullableValue(gear as BodyArmor?)),
+      GearSlot.leftHand =>
+        current.copyWith(leftHand: NullableValue(gear as HandGear?)),
+      GearSlot.rightHand =>
+        current.copyWith(rightHand: NullableValue(gear as HandGear?)),
+    };
+
+    _newState(state);
+  }
+
   Future<Cycle> startActivity(Activity activity) async {
     if (current.attributes.stamina.$1 - activity.staminaCost >= 0) {
       final minutes = switch (activity.type) {
