@@ -169,32 +169,40 @@ class _GearViewState extends State<GearView> {
               ],
             ),
           ),
-          if (_selectedGearType != null)
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              top: 0,
-              child: GearChangeView(
-                selected: playerState.gearFromSlot(_gearSlot),
-                gearType: _selectedGearType!,
-                fullSelection: playerState.equippedGear,
-                onCancel: () {
-                  setState(() {
-                    _selectedGearType = null;
-                  });
-                },
-                onSelected: (gear) {
-                  setState(() {
-                    _selectedGearType = null;
-                  });
-                  context.read<GameRepository>().equipGear(
-                        gear: gear,
-                        slot: _gearSlot,
-                      );
-                },
-              ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
+            child: AnimatedScale(
+              duration: const Duration(milliseconds: 200),
+              scale: _selectedGearType == null ? 0 : 1,
+              child: _selectedGearType != null
+                  ? GearChangeView(
+                      selected: playerState.gearFromSlot(_gearSlot),
+                      gearType: _selectedGearType!,
+                      fullSelection: playerState.equippedGear,
+                      onCancel: () {
+                        setState(() {
+                          _selectedGearType = null;
+                        });
+                      },
+                      onSelected: (gear) {
+                        setState(() {
+                          _selectedGearType = null;
+                        });
+                        context.read<GameRepository>().equipGear(
+                              gear: gear,
+                              slot: _gearSlot,
+                            );
+                      },
+                    )
+                  : const NesContainer(
+                      width: double.infinity,
+                      height: double.infinity,
+                    ),
             ),
+          ),
         ],
       ),
     );

@@ -90,7 +90,7 @@ class _GearChangeViewState extends State<GearChangeView> {
           const SizedBox(height: 8),
           SizedBox(
             height: 32,
-            child: _selected != null
+            child: _selected != null && _selected != _currentSelected
                 ? _GearLabel(gear: _selected!)
                 : const Text(' - '),
           ),
