@@ -58,10 +58,15 @@ class _GearViewState extends State<GearView> {
                   children: [
                     Expanded(
                       flex: 4,
-                      child: NesContainer(
-                        height: 200,
-                        child: PlayerSprite(
-                          playerState: playerState,
+                      child: ClipRect(
+                        child: NesContainer(
+                          height: 200,
+                          child: Transform.scale(
+                            scale: 6,
+                            child: PlayerSprite(
+                              playerState: playerState,
+                            ),
+                          ),
                         ),
                       ),
                     ),

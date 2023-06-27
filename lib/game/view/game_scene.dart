@@ -11,8 +11,9 @@ class GameScene extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GameCubit, GameState>(
       buildWhen: (previous, current) =>
-          previous.playerState.currentActivity !=
-          current.playerState.currentActivity,
+          (previous.playerState.currentActivity !=
+              current.playerState.currentActivity) ||
+          previous.playerState.hasDifferentGear(current.playerState),
       builder: (context, state) {
         final activity = state.playerState.currentActivity;
 

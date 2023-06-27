@@ -135,6 +135,13 @@ class PlayerState extends Equatable {
     );
   }
 
+  bool hasDifferentGear(PlayerState other) {
+    return leftHand != other.leftHand ||
+        rightHand != other.rightHand ||
+        head != other.head ||
+        body != other.body;
+  }
+
   @override
   List<Object?> get props => [
         attributes,

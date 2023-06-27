@@ -8,7 +8,7 @@ const bronzePickaxe = Pickaxe(
   name: 'Bronze Pickaxe',
   description: 'A pickaxe made of bronze.',
   icon: _pickaxeIcon,
-  sprite: 'gears/pickaxes/bronze_pickaxe.png',
+  sprite: 'assets/gear/pickaxes/bronze-pickaxe.png',
   attack: 1,
   oresSupported: [
     OreType.tin,

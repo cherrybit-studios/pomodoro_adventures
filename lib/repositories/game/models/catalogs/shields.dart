@@ -8,7 +8,7 @@ const woodRoundShield = Shield(
   name: 'Wood Round Shield',
   description: 'A simple shield made of wood.',
   icon: _roundShieldIcon,
-  sprite: 'gears/pickaxes/wood_round_shield.png',
+  sprite: 'assets/gear/shields/wood-round-shield.png',
   defense: 1,
 );
 

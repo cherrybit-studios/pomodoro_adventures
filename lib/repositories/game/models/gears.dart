@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:pomodoro_adventures/repositories/repositories.dart';
 
 enum GearId {
@@ -13,12 +15,14 @@ abstract class Gear extends Item {
     required super.description,
     required super.icon,
     required this.sprite,
+    this.spriteRect = const Rect.fromLTWH(0, 0, 16, 16),
   });
 
   final String sprite;
+  final Rect spriteRect;
 
   @override
-  List<Object?> get props => super.props + [sprite];
+  List<Object?> get props => super.props + [sprite, spriteRect];
 }
 
 abstract class Armor extends Gear {
@@ -28,6 +32,7 @@ abstract class Armor extends Gear {
     required super.icon,
     required this.defense,
     required super.sprite,
+    super.spriteRect,
   });
 
   final int defense;
@@ -43,6 +48,7 @@ class HeadArmor extends Armor {
     required super.icon,
     required super.defense,
     required super.sprite,
+    super.spriteRect,
   });
 
   @override
@@ -56,6 +62,7 @@ class BodyArmor extends Armor {
     required super.icon,
     required super.defense,
     required super.sprite,
+    super.spriteRect,
   });
 
   @override
@@ -68,6 +75,7 @@ abstract class HandGear extends Gear {
     required super.description,
     required super.icon,
     required super.sprite,
+    super.spriteRect,
   });
 }
 
@@ -78,6 +86,7 @@ abstract class Weapon extends HandGear {
     required super.icon,
     required super.sprite,
     required this.attack,
+    super.spriteRect,
   });
 
   final int attack;
@@ -93,12 +102,16 @@ class Shield extends HandGear {
     required super.icon,
     required super.sprite,
     required this.defense,
+    super.spriteRect,
+    this.backSpriteRect = const Rect.fromLTWH(16, 0, 16, 16),
   });
 
   final int defense;
 
+  final Rect backSpriteRect;
+
   @override
-  List<Object?> get props => super.props + [defense];
+  List<Object?> get props => super.props + [defense, backSpriteRect];
 }
 
 class Pickaxe extends Weapon {
@@ -109,6 +122,7 @@ class Pickaxe extends Weapon {
     required super.attack,
     required super.sprite,
     required this.oresSupported,
+    super.spriteRect,
   });
 
   final List<OreType> oresSupported;
