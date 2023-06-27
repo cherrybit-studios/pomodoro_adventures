@@ -142,17 +142,17 @@ class _GearChangeViewState extends State<GearChangeView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               NesButton(
+                type: NesButtonType.warning,
+                onPressed: widget.onCancel,
+                child: Text(l10n.cancel),
+              ),
+              const SizedBox(width: 8),
+              NesButton(
                 type: NesButtonType.primary,
                 onPressed: () {
                   widget.onSelected(_selected);
                 },
                 child: Text(l10n.confirm),
-              ),
-              const SizedBox(width: 8),
-              NesButton(
-                type: NesButtonType.warning,
-                onPressed: widget.onCancel,
-                child: Text(l10n.cancel),
               ),
             ],
           ),
@@ -228,14 +228,14 @@ class _GearChange extends StatelessWidget {
     return Row(
       children: [
         Text(
-          'A:${attackChange < 0 ? '-' : '+'}$attackChange',
+          'ATK:${attackChange < 0 ? '' : '+'}$attackChange',
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: attackColor,
               ),
         ),
         const SizedBox(width: 8),
         Text(
-          'D:${defenseChange < 0 ? '-' : '+'}$defenseChange',
+          'DEF:${defenseChange < 0 ? '' : '+'}$defenseChange',
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: defenseColor,
               ),
