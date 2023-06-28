@@ -37,7 +37,11 @@ class GameRepository {
         health: (10, 10),
       ),
       location: LocationId.fahsteadTown,
-      inventory: [allPickaxes.gears.first, allShields.gears.first],
+      inventory: [
+        allPickaxes.gears.first,
+        allShields.gears.first,
+        ...basicHelms.gears,
+      ],
       currentActivity: null,
       leftHand: null,
       rightHand: null,

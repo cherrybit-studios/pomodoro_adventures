@@ -48,7 +48,7 @@ class HeadArmor extends Armor {
     required super.icon,
     required super.defense,
     required super.sprite,
-    super.spriteRect,
+    super.spriteRect = const Rect.fromLTWH(0, 0, 20, 16),
   });
 
   @override

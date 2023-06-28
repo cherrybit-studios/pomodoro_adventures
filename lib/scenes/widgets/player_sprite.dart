@@ -44,6 +44,15 @@ class PlayerSprite extends StatelessWidget {
                 filterQuality: FilterQuality.none,
               ),
             ),
+            if (playerState.head != null)
+              Positioned(
+                left: .8,
+                top: -1.8,
+                child: SpriteImage(
+                  url: playerState.head!.sprite,
+                  src: playerState.head!.spriteRect,
+                ),
+              ),
             if (playerState.rightHand != null)
               Positioned(
                 bottom: 16,

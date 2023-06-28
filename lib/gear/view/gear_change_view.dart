@@ -42,6 +42,10 @@ class _GearChangeViewState extends State<GearChangeView> {
         .where((gear) {
           if (widget.gearType == Armor) {
             return gear is Armor;
+          } else if (widget.gearType == HeadArmor) {
+            return gear is HeadArmor;
+          } else if (widget.gearType == BodyArmor) {
+            return gear is BodyArmor;
           } else if (widget.gearType == HandGear) {
             return gear is HandGear;
           }
