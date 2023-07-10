@@ -17,8 +17,8 @@ dependencies:
   intl: ^0.18.0
   mini_sprite: ^0.1.0
   nes_ui:
-    path:
-      ../../../nes_ui
+    git:
+      url: https://github.com/erickzanardo/nes_ui.git
   phased: ^0.0.3
 
 dev_dependencies:
