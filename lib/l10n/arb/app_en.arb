@@ -17,5 +17,7 @@
     "currentEquippedGear": "Equipped gear",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "nohting": "Nothing"
+    "nohting": "Nothing",
+    "buy": "Buy",
+    "description": "Description"
 }

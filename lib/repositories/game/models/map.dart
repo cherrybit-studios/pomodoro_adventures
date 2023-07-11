@@ -8,17 +8,17 @@ const map = <LocationId, Location>{
     background: 'assets/locations/fahstead.png',
     points: [
       Shop(
-        name: 'Five leaves General Store',
-        gearCatalogs: [],
-      ),
-      Shop(
-        name: "Boar's Head Inn",
-        gearCatalogs: [],
-      ),
-      Shop(
-        name: 'Iron Hammer Smithy',
+        name: 'Wolfen’s Smithy',
+        description: '''
+Not much is known about Wolfen, not even his real name, some say that he came from the flooded forest of the Lowlands, others say that he lived for decades on top of Mount Verlavus, using the active volcano as his private forge.
+
+All that is known for sure is that he is the most friendly person and his craft with metalworks are the best in the whole kingdom.
+''',
+        portrait: 'assets/locations/points/portraits/fahstead/wolfen.png',
         gearCatalogs: [
           basicPickaxes,
+          basicShields,
+          basicHelms,
         ],
       ),
     ],
@@ -31,6 +31,8 @@ const map = <LocationId, Location>{
     points: [
       Mine(
         name: 'Ground Level veins',
+        description: '',
+        portrait: '',
         ores: [
           OreType.cooper,
           OreType.tin,

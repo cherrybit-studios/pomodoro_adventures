@@ -5,6 +5,7 @@ import 'package:pomodoro_adventures/game/game.dart';
 import 'package:pomodoro_adventures/gear/gear.dart';
 import 'package:pomodoro_adventures/l10n/l10n.dart';
 import 'package:pomodoro_adventures/map/map.dart';
+import 'package:pomodoro_adventures/points/points.dart';
 import 'package:pomodoro_adventures/repositories/repositories.dart';
 import 'package:pomodoro_adventures/widgets/widgets.dart';
 
@@ -121,7 +122,11 @@ class _PlacesMenu extends StatelessWidget {
           for (final point in location.points) ...[
             NesButton(
               type: NesButtonType.normal,
-              onPressed: onBack,
+              onPressed: () {
+                Navigator.of(context).push(
+                  PointsPage.route(point),
+                );
+              },
               child: SizedBox(
                 width: 200,
                 child: Text(point.name),

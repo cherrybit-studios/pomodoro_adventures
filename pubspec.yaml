@@ -36,6 +36,7 @@ flutter:
     - assets/sprites/
     - assets/tilesets/
     - assets/locations/
+    - assets/locations/points/portraits/fahstead/
     - assets/gear/
     - assets/gear/pickaxes/
     - assets/gear/shields/

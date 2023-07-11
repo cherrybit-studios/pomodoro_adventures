@@ -18,9 +18,13 @@ enum LocationId {
 abstract class Point {
   const Point({
     required this.name,
+    required this.description,
+    required this.portrait,
   });
 
   final String name;
+  final String description;
+  final String portrait;
 
   String get summary;
 }
@@ -29,6 +33,8 @@ class Shop extends Point {
   const Shop({
     required super.name,
     required this.gearCatalogs,
+    required super.description,
+    required super.portrait,
   });
 
   final List<GearCatalog<dynamic>> gearCatalogs;
@@ -49,6 +55,8 @@ class Mine extends Point {
   const Mine({
     required super.name,
     required this.ores,
+    required super.description,
+    required super.portrait,
   });
 
   final List<OreType> ores;

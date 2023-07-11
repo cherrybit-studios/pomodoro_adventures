@@ -32,57 +32,46 @@ class MapView extends StatelessWidget {
             constraints.maxHeight / 2 - totalSize.height / 2,
           );
 
-          return Stack(
-            children: [
-              for (var y = 0; y < totalSize.height; y += _cellSize)
-                for (var x = 0; x < totalSize.width; x += _cellSize)
-                  Positioned(
-                    left: center.dx + x.toDouble(),
-                    top: center.dy + y.toDouble(),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: gridColor,
+          return GamePage(
+            child: Stack(
+              children: [
+                for (var y = 0; y < totalSize.height; y += _cellSize)
+                  for (var x = 0; x < totalSize.width; x += _cellSize)
+                    Positioned(
+                      left: center.dx + x.toDouble(),
+                      top: center.dy + y.toDouble(),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: gridColor,
+                          ),
+                        ),
+                        child: SizedBox(
+                          width: _cellSize.toDouble(),
+                          height: _cellSize.toDouble(),
                         ),
                       ),
-                      child: SizedBox(
-                        width: _cellSize.toDouble(),
-                        height: _cellSize.toDouble(),
-                      ),
+                    ),
+                for (final entry in map.entries)
+                  Positioned(
+                    left: center.dx + entry.value.x * _cellSize,
+                    top: center.dy + entry.value.y * _cellSize,
+                    child: _MapMarker(
+                      entry: entry,
+                      playerState: playerState,
                     ),
                   ),
-              for (final entry in map.entries)
-                Positioned(
-                  left: center.dx + entry.value.x * _cellSize,
-                  top: center.dy + entry.value.y * _cellSize,
-                  child: _MapMarker(
-                    entry: entry,
-                    playerState: playerState,
+                if (mapState.selected != null)
+                  Positioned(
+                    top: 16,
+                    right: 16,
+                    child: LocationPanel(
+                      locationId: mapState.selected!,
+                      location: map[mapState.selected!]!,
+                    ),
                   ),
-                ),
-              Positioned(
-                left: 16,
-                top: 16,
-                child: NesButton(
-                  type: NesButtonType.normal,
-                  child: NesIcon(
-                    iconData: NesIcons.instance.leftArrowIndicator,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-              if (mapState.selected != null)
-                Positioned(
-                  top: 16,
-                  right: 16,
-                  child: LocationPanel(
-                    locationId: mapState.selected!,
-                    location: map[mapState.selected!]!,
-                  ),
-                ),
-            ],
+              ],
+            ),
           );
         },
       ),
