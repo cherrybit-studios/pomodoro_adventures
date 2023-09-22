@@ -37,6 +37,16 @@ class App extends StatelessWidget {
               fontSize: 14,
             ),
           ),
+          nesButtonTheme: const NesButtonTheme(
+            normal: Color(0xFFfff392),
+            primary: Color(0xFFa2fff3),
+            success: Color(0xFFcbf382),
+            warning: Color(0xFFff7930),
+            error: Color(0xffb21030),
+            lightLabelColor: Color(0xffebebeb),
+            darkLabelColor: Color(0xff000000),
+            borderColor: Color(0xff794100),
+          ),
         ).copyWith(
           scaffoldBackgroundColor: const Color(0xFF305182),
         ),
